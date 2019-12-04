@@ -1,0 +1,60 @@
+import pygame, sys
+from pygame.locals import *
+import random
+
+def main():
+    pygame.init()
+    step=10
+    WIDTH =400
+    STEPW =WIDTH//step
+    HEIGHT=400
+    STEPH = HEIGHT//step
+    SCREEN=(WIDTH,HEIGHT)
+
+    DISPLAY=pygame.display.set_mode(SCREEN,0,32)
+
+    WHITE=(255,255,255)
+    BLUE=(0,0,255)
+    RED=(255,150,50)
+    GREEN=(200,255,200)
+    BLACK=(0,0,0)
+
+    DISPLAY.fill(WHITE)
+    
+    movingX = STEPW *3
+    movingY = STEPH *3
+    
+    colorsBoard =[]
+    
+    for a in range(0,WIDTH,STEPW):
+      for b in range(0,HEIGHT,STEPH):
+        
+        kolor = (0,0,random.randint(0,255))
+        pygame.draw.rect(DISPLAY,kolor,(a,b,STEPH,STEPW))
+        colorsBoard +=[kolor]
+
+
+    while True:
+      for event in pygame.event.get():
+        if event.type==QUIT:
+          pygame.quit()
+          sys.exit()
+        elif event.type == KEYDOWN:
+          if (event.key == K_LEFT):
+            movingX -=STEPW
+          if (event.key == K_RIGHT):
+            movingX +=STEPW
+          if (event.key == K_DOWN):
+            movingY +=STEPW
+          if (event.key == K_UP):
+            movingY -=STEPW
+      c =0
+      for a in range(0,WIDTH,STEPW):
+        for b in range(0,HEIGHT,STEPH):
+          kolor = (0,0,random.randint(0,255))
+          pygame.draw.rect(DISPLAY,colorsBoard[c],(a,b,STEPH,STEPW))
+          c+=1  
+      pygame.draw.rect(DISPLAY,RED,(movingX,movingY,STEPH,STEPW))  
+      pygame.display.update()
+
+main()
